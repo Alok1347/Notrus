@@ -1,0 +1,180 @@
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+/* 
+"*" is a universal selector applied on whole page,
+box-sizing =>it change the box model so that borders and paddings are no longer added
+to total width and total height that we specify for a box model
+ */
+html {
+	font-size: 62.5%; /*16px=100% so 62.5%=10px, Now 10px will be equal to 1 rem because 1 rem will be exactly root font size */
+}
+body {
+	font-family: 'Lato', sans-serif;
+	font-family: 400;
+	/* font-size: 16px;  */
+	line-height: 1.7; /* this is space between two lines */
+	color: #777;
+	padding: 3rem; /* Earlier 30 px */
+	box-sizing: border-box; /* Better practice to inherit from parent  */
+}
+
+.header {
+	height: 95vh;
+	background-image: linear-gradient(to right bottom, #28b485c0, #7ed56fda),
+		url(../img/hero.jpg);
+	background-size: cover;
+	background-position: top;
+	clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+	position: relative; /*for reference to child element to calculate their  size calculations */
+}
+/* 
+linear-gradient is to put color over a background image ,
+while to right ,left, center  property define which part of image should be static when we resize the window screen,
+background-size: cover; => Resize the background image to cover the entire container, even if it has to stretch the image or cut a little bit off one of the edges, 
+There are four viewport-based units in CSS. These are vh, vw, vmin and vmax.,
+conver bg image to any particular shape like triangel ,rectangle etc,use css clip path maker website 
+ */
+.header__logo-box {
+	position: absolute;
+	top: 4rem; /* Calculate from parent elemnet whose position is relative */
+	left: 4rem; /* Calculate from parent elemnet whose position is relative */
+}
+
+.header__logo {
+	height: 3.5rem;
+}
+
+.header__text-box {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+/* 	transform: translate(-50%, -50%);
+ It will shift object 50% to left and top, 50% area so it will half in one part and other half in second part 
+ it have nothing todo with main sizing it applies on calculated styling after main calculation.
+ */
+.heading-primary {
+	color: #fff;
+	text-transform: uppercase;
+	margin-bottom: 6rem;
+	/*backface-visibility: hidden; To hide anything from back of animation like shaking of image */
+}
+.heading-primary--main {
+	display: block;
+	font-size: 6rem;
+	font-weight: 400;
+	letter-spacing: 3.5rem;
+
+	animation: moveInLeft;
+	animation-duration: 1s;
+	animation-timing-function: ease-out; /* How animation will response Speed at start than slow at end or other a/c to property */
+}
+.heading-primary--sub {
+	display: block;
+	font-size: 2rem;
+	font-weight: 700;
+	letter-spacing: 1.74rem;
+
+	animation: moveInRight 1s ease-out;
+}
+@keyframes moveInLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-10rem);
+	}
+	80% {
+		transform: translateX(1rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0);
+	}
+}
+@keyframes moveInRight {
+	0% {
+		opacity: 0;
+		transform: translateX(10rem);
+	}
+	80% {
+		transform: translateX(-1rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0);
+	}
+}
+@keyframes moveInBottom {
+	0% {
+		opacity: 0;
+		transform: translateY(3rem);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0);
+	}
+}
+/* Animation, browser only response to opacity and transform, we can use animation on mouse hover also not only while we reload page */
+.btn:link,
+.btn:visited {
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 1.5rem 4rem;
+	display: inline-block; /*Treat the text as a block so box model applies like padding but it will be still a text so that whatever text styling applied to text elements in parent element like text-align: center; */
+	border-radius: 10rem; /* Round the corners of button */
+	transition: all .2s; /* Animation */
+	position: relative; /* For child element position reference */
+	font-size: 1.6rem;
+}
+.btn:hover {
+	transform: translateY(-.3rem);
+	box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2); /* 0:x axis, 10px: y axis , 20px: for blur rgba: .2: for opacity of color, 0 0 0 : rgb */
+}
+/* .btn:hover => these are psudo classes */
+.btn:active {
+	transform: translateY(-.1rem);
+	box-shadow: 0 1rem 1rem rgba(0, 0, 0, .2);
+}
+.btn--white {
+	background-color: #fff;
+	color: #777;
+}
+.btn::after {
+	content: ""; /* Always mandatory even they are empty */
+	display: inline-block; /* Always mandatory even they are empty */
+	height: 100%;
+	width: 100%;
+	border-radius: 10rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1; /* Defines position of element if they want on top of other ,-1 means behind; */
+	transition: all .4s;
+}
+.btn--white::after {
+	background-color: #fff;
+}
+.btn:hover::after {
+	transform: scaleX(1.4) scaleY(1.6); /* Scale => transform the size of button 2 times ; */
+	opacity: 0; /* To fade the button */
+}
+/* .btn::after =>Sudo element ,it looks exactly like button we have but we put it behind button */
+.btn--animated {
+	animation: moveInBottom .5s ease-out .75s;
+	animation-fill-mode: backwards; /* To reverse animation behaviour */
+}
